@@ -1,0 +1,27 @@
+import praw
+reddit=praw.Reddit(client_id='Obe8sGLlN4NcKQ',
+                  client_secret='VlXJk0avVaEuqmYdWEjPXFb4wEU',
+                  password='vWGVb9sWZZRo6cVk',
+                  user_agent='testscript by /u/Smashdawg',
+                  username='Smashdawg')
+
+subreddit=reddit.subreddit('twitch')
+
+#subreddit_flair=flair_name:"Tech Support"
+
+hot_python=subreddit.hot(limit=10)
+for submission in hot_python:
+    if not submission.stickied:
+        print('Title: {}, ups: {}, Have we visited: {}'.format(submission.title,
+                                                              submission.ups,
+                                                              submission.downs,
+                                                              submission.visited))
+comments=submission.comments.list()
+for comment in comments:
+    print(20*'-')
+    print('Parent ID:',comment.parent())
+    print('Comment ID:', comment.id)
+    print(comment.body)
+    if len(comment.replies)<0:
+        for reply in comment.replies:
+            print('REPLY',reply.body)
